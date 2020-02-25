@@ -221,11 +221,11 @@ unsigned char RFID::MFRC522ToCard(unsigned char command, unsigned char *sendData
 			break;
     }
 
-		Write_MFRC522(CommIEnReg, irqEn|0x80);  // enable interrupt request
-    ClearBitMask(CommIrqReg, 0x80);     // clear all interrupt request bit
-    SetBitMask(FIFOLevelReg, 0x80);     // FlushBuffer = 1, FIFO initialization
+		writeMFRC522(CommIEnReg, irqEn|0x80);  // enable interrupt request
+    clearBitMask(CommIrqReg, 0x80);     // clear all interrupt request bit
+    setBitMask(FIFOLevelReg, 0x80);     // FlushBuffer = 1, FIFO initialization
 
-  Write_MFRC522(CommandReg, PCD_IDLE);  // NO action; cancel the current command ? ? ?
+  writeMFRC522(CommandReg, PCD_IDLE);  // NO action; cancel the current command ? ? ?
 
   // Write data to the FIFO
     for (i=0; i<sendLen; i++)
@@ -352,7 +352,7 @@ unsigned char RFID::anticoll(unsigned char *serNum)
 
 		//ClearBitMask(Status2Reg, 0x08);   //TempSensclear
     //ClearBitMask(CollReg,0x80);     //ValuesAfterColl
-  Write_MFRC522(BitFramingReg, 0x00);   //TxLastBists = BitFramingReg[2..0]
+  writeMFRC522(BitFramingReg, 0x00);   //TxLastBists = BitFramingReg[2..0]
 
     serNum[0] = PICC_ANTICOLL;
     serNum[1] = 0x20;
